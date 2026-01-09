@@ -6,7 +6,7 @@ import type { Investment } from '../types/investment';
 import styles from '../styles/Investimentos.module.css';
 
 function Investimentos() {
-  const { currentOrganization, member } = useAuth();
+  const { currentOrganization } = useAuth();
   const [investments, setInvestments] = useState<Investment[]>([]);
   const [totalInvested, setTotalInvested] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -16,9 +16,11 @@ function Investimentos() {
 
     try {
       setLoading(true);
-      const data = await investmentService.getByOrganization(currentOrganization.id);
+      const data = await investmentService.getByOrganization(
+        currentOrganization.id
+      );
       setInvestments(data);
-      
+
       // Calcular total investido
       const total = data.reduce((sum, inv) => sum + inv.amount, 0);
       setTotalInvested(total);
@@ -62,7 +64,9 @@ function Investimentos() {
     return (
       <div className="main-content">
         <div className="container-fluid">
-          <div className="alert alert-warning">Nenhuma organização selecionada</div>
+          <div className="alert alert-warning">
+            Nenhuma organização selecionada
+          </div>
         </div>
       </div>
     );
@@ -106,7 +110,8 @@ function Investimentos() {
             <div className="alert alert-info">Carregando investimentos...</div>
           ) : investments.length === 0 ? (
             <div className="alert alert-info">
-              Nenhum investimento cadastrado ainda. Use o botão acima para adicionar um investimento.
+              Nenhum investimento cadastrado ainda. Use o botão acima para
+              adicionar um investimento.
             </div>
           ) : (
             <div className="table-responsive">

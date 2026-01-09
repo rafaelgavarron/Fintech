@@ -1,6 +1,12 @@
 // contexts/AuthContext.tsx
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { userService } from '../services/userService'; 
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from 'react';
+import { userService } from '../services/userService';
 import { organizationService } from '../services/organizationService';
 import { memberService } from '../services/memberService';
 import { roleService } from '../services/roleService';
@@ -9,36 +15,39 @@ import type { Organization } from '../types/organization';
 import type { Member } from '../types/member';
 
 interface AuthContextType {
-  user: User | null;
-  currentOrganization: Organization | null;
-  userOrganizations: Organization[];
-  member: Member | null;
-  isLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
-  logout: () => void;
-  setCurrentOrganization: (org: Organization) => void;
-  refreshUserOrganizations: () => Promise<void>;
+  user: User | null;
+  currentOrganization: Organization | null;
+  userOrganizations: Organization[];
+  member: Member | null;
+  isLoading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  register: (name: string, email: string, password: string) => Promise<void>;
+  logout: () => void;
+  setCurrentOrganization: (org: Organization) => void;
+  refreshUserOrganizations: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 };
 
 interface AuthProviderProps {
-  children: ReactNode;
+  children: ReactNode;
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [currentOrganization, setCurrentOrganization] = useState<Organization | null>(null);
-  const [userOrganizations, setUserOrganizations] = useState<Organization[]>([]);
+  const [user, setUser] = useState<User | null>(null);
+  const [currentOrganization, setCurrentOrganization] =
+    useState<Organization | null>(null);
+  const [userOrganizations, setUserOrganizations] = useState<Organization[]>(
+    []
+  );
   const [member, setMember] = useState<Member | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -56,20 +65,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
             // Carregar organizações do usuário através dos membros
             const members = await memberService.getByUser(user.id);
-            
+
             if (members.length > 0) {
               // Buscar detalhes das organizações
-              const orgPromises = members.map(m => organizationService.getById(m.organizationId));
+              const orgPromises = members.map((m) =>
+                organizationService.getById(m.organizationId)
+              );
               const organizations = await Promise.all(orgPromises);
-              
+
               setUserOrganizations(organizations);
 
               // Se houver uma organização salva, carregá-la
               if (savedOrgId) {
-                const savedOrg = organizations.find(o => o.id === savedOrgId);
+                const savedOrg = organizations.find((o) => o.id === savedOrgId);
                 if (savedOrg) {
                   setCurrentOrganization(savedOrg);
-                  const userMember = members.find(m => m.organizationId === savedOrgId);
+                  const userMember = members.find(
+                    (m) => m.organizationId === savedOrgId
+                  );
                   if (userMember) {
                     setMember(userMember);
                   }
@@ -77,13 +90,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                   // Se a organização salva não existir mais, usar a primeira disponível
                   setCurrentOrganization(organizations[0]);
                   setMember(members[0]);
-                  localStorage.setItem('currentOrganizationId', organizations[0].id);
+                  localStorage.setItem(
+                    'currentOrganizationId',
+                    organizations[0].id
+                  );
                 }
               } else if (organizations.length > 0) {
                 // Se não houver organização salva, usar a primeira
                 setCurrentOrganization(organizations[0]);
                 setMember(members[0]);
-                localStorage.setItem('currentOrganizationId', organizations[0].id);
+                localStorage.setItem(
+                  'currentOrganizationId',
+                  organizations[0].id
+                );
               }
             }
           } catch (error) {
@@ -119,9 +138,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     try {
       const members = await memberService.getByUser(targetUserId);
-      
+
       if (members.length > 0) {
-        const orgPromises = members.map(m => organizationService.getById(m.organizationId));
+        const orgPromises = members.map((m) =>
+          organizationService.getById(m.organizationId)
+        );
         const organizations = await Promise.all(orgPromises);
         setUserOrganizations(organizations);
       } else {
@@ -139,25 +160,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const mockUser: any = {
         id: 'user-mock-123',
         name: 'Usuário Mock',
-        email: 'mock@teste.com'
+        email: 'mock@teste.com',
       };
-      
+
       const mockOrg: any = {
         id: 'org-mock-123',
         name: 'Organização Mock',
-        isActive: true
+        isActive: true,
       };
-      
+
       const mockMember: any = {
         id: 'member-mock-123',
         userId: 'user-mock-123',
         organizationId: 'org-mock-123',
-        roleId: 'role-admin'
+        roleId: 'role-admin',
       };
 
       setUser(mockUser);
       localStorage.setItem('user', JSON.stringify(mockUser));
-      
+
       setUserOrganizations([mockOrg]);
       setCurrentOrganization(mockOrg);
       setMember(mockMember);
@@ -168,7 +189,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     try {
       const loginResponse = await userService.login(email, password);
-      
+
       if (!loginResponse.success || !loginResponse.user) {
         throw new Error(loginResponse.message || 'Credenciais inválidas');
       }
@@ -179,18 +200,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       // Carregar organizações do usuário através dos membros
       const members = await memberService.getByUser(loggedUser.id);
-      
+
       if (members.length > 0) {
         // Buscar detalhes das organizações
-        const orgPromises = members.map(m => organizationService.getById(m.organizationId));
+        const orgPromises = members.map((m) =>
+          organizationService.getById(m.organizationId)
+        );
         const organizations = await Promise.all(orgPromises);
-        
+
         setUserOrganizations(organizations);
 
         // Usar a primeira organização como padrão
         const firstOrg = organizations[0];
         const firstMember = members[0];
-        
+
         setCurrentOrganization(firstOrg);
         setMember(firstMember);
         localStorage.setItem('currentOrganizationId', firstOrg.id);
@@ -199,8 +222,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         try {
           // Buscar role "Owner" ou criar uma organização padrão
           const roles = await roleService.getAll();
-          const ownerRole = roles.find(r => r.name === 'Owner') || roles[0];
-          
+          const ownerRole = roles.find((r) => r.name === 'Owner') || roles[0];
+
           if (!ownerRole) {
             throw new Error('Nenhum role disponível no sistema');
           }
@@ -209,7 +232,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           const defaultOrg = await organizationService.create(
             `${loggedUser.name}'s Organization`,
             true,
-            Math.floor(Date.now() / 1000) + (90 * 24 * 60 * 60) // 90 dias de trial
+            Math.floor(Date.now() / 1000) + 90 * 24 * 60 * 60 // 90 dias de trial
           );
 
           // Criar membro associando usuário à organização
@@ -243,8 +266,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       // Buscar role "Owner" ou usar o primeiro disponível
       const roles = await roleService.getAll();
-      const ownerRole = roles.find(r => r.name === 'Owner') || roles[0];
-      
+      const ownerRole = roles.find((r) => r.name === 'Owner') || roles[0];
+
       if (!ownerRole) {
         throw new Error('Nenhum role disponível no sistema');
       }
@@ -253,7 +276,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const defaultOrg = await organizationService.create(
         `${name}'s Organization`,
         true,
-        Math.floor(Date.now() / 1000) + (90 * 24 * 60 * 60) // 90 dias de trial
+        Math.floor(Date.now() / 1000) + 90 * 24 * 60 * 60 // 90 dias de trial
       );
 
       // Criar membro associando usuário à organização
@@ -273,22 +296,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    setCurrentOrganization(null);
-    setUserOrganizations([]);
-    setMember(null);
-    localStorage.removeItem('user');
-    localStorage.removeItem('currentOrganizationId');
-  };
+  const logout = () => {
+    setUser(null);
+    setCurrentOrganization(null);
+    setUserOrganizations([]);
+    setMember(null);
+    localStorage.removeItem('user');
+    localStorage.removeItem('currentOrganizationId');
+  };
 
   const handleSetCurrentOrganization = async (org: Organization) => {
     if (!user) return;
-    
+
     try {
       // Buscar membro do usuário na organização selecionada
-      const memberData = await memberService.getByUserAndOrganization(user.id, org.id);
-      
+      const memberData = await memberService.getByUserAndOrganization(
+        user.id,
+        org.id
+      );
+
       if (memberData) {
         setCurrentOrganization(org);
         setMember(memberData);
@@ -307,22 +333,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  return (
-    <AuthContext.Provider
-      value={{
-        user,
-        currentOrganization,
-        userOrganizations,
-        member,
-        isLoading,
-        login,
-        register,
-        logout,
-        setCurrentOrganization: handleSetCurrentOrganization,
-        refreshUserOrganizations,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        currentOrganization,
+        userOrganizations,
+        member,
+        isLoading,
+        login,
+        register,
+        logout,
+        setCurrentOrganization: handleSetCurrentOrganization,
+        refreshUserOrganizations,
+      }}
+    >
+            {children}   {' '}
+    </AuthContext.Provider>
+  );
 };

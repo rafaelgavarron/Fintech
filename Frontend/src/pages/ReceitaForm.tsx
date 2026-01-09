@@ -5,7 +5,10 @@ import { useNavigate, Link, useParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { incomeService } from '../services/incomeService';
 import { bankAccountService } from '../services/bankAccountService';
-import { formatCurrencyInput, parseCurrencyToCents } from '../utils/currencyFormatter';
+import {
+  formatCurrencyInput,
+  parseCurrencyToCents,
+} from '../utils/currencyFormatter';
 import type { BankAccount } from '../types/bankAccount';
 
 function ReceitaForm() {
@@ -32,14 +35,16 @@ function ReceitaForm() {
     'Aluguel',
     'Dividendos',
     'Outros',
-    'Customizada'
+    'Customizada',
   ];
 
   // Função ajustada para forçar array vazio em caso de falha
   const loadBankAccounts = useCallback(async () => {
     if (!currentOrganization) return;
     try {
-      const accounts = await bankAccountService.getByOrganization(currentOrganization.id);
+      const accounts = await bankAccountService.getByOrganization(
+        currentOrganization.id
+      );
       setBankAccounts(accounts);
       // Define a primeira conta como selecionada por padrão, se houver
       if (accounts.length > 0 && !id) {
@@ -47,10 +52,9 @@ function ReceitaForm() {
       }
     } catch (error) {
       console.error('Erro ao carregar contas bancárias. API Offline?', error);
-      setBankAccounts([]); 
+      setBankAccounts([]);
     }
   }, [currentOrganization, id]);
-
 
   useEffect(() => {
     if (id) {
@@ -60,7 +64,6 @@ function ReceitaForm() {
       loadBankAccounts();
     }
   }, [id, currentOrganization, loadBankAccounts]); // Adicionado loadBankAccounts como dependência
-
 
   const loadIncome = async () => {
     if (!id) return;
@@ -102,14 +105,16 @@ function ReceitaForm() {
     }
 
     if (bankAccounts.length === 0) {
-      alert('Você precisa cadastrar uma conta bancária antes de lançar receitas. Vá para a página de Contas Bancárias.');
+      alert(
+        'Você precisa cadastrar uma conta bancária antes de lançar receitas. Vá para a página de Contas Bancárias.'
+      );
       return;
     }
-    
+
     // Validação da Conta
     if (!selectedBankAccountId && !id) {
-        alert('Selecione a conta bancária onde entrará o dinheiro.');
-        return;
+      alert('Selecione a conta bancária onde entrará o dinheiro.');
+      return;
     }
 
     setLoading(true);
@@ -121,7 +126,10 @@ function ReceitaForm() {
       // Processar categoria: se for "Customizada", usar customCategory; se vazio/undefined, não enviar
       let finalCategory: string | undefined = undefined;
       if (category === 'Customizada') {
-        finalCategory = customCategory && customCategory.trim() !== '' ? customCategory.trim() : undefined;
+        finalCategory =
+          customCategory && customCategory.trim() !== ''
+            ? customCategory.trim()
+            : undefined;
       } else if (category && category.trim() !== '') {
         finalCategory = category.trim();
       }
@@ -145,7 +153,7 @@ function ReceitaForm() {
           category: finalCategory,
           // Adicionando a conta bancária para criação
           bankAccountId: selectedBankAccountId,
-        });
+        } as any);
       }
       navigate('/despesas'); // Redireciona para a lista unificada de transações
     } catch (error: any) {
@@ -160,7 +168,9 @@ function ReceitaForm() {
     return (
       <div className="main-content">
         <div className="container-fluid">
-          <div className="alert alert-warning">Nenhuma organização selecionada</div>
+          <div className="alert alert-warning">
+            Nenhuma organização selecionada
+          </div>
         </div>
       </div>
     );
@@ -173,7 +183,8 @@ function ReceitaForm() {
           {id ? 'Editar Receita' : 'Registrar nova Receita'}
         </h1>
         <p className="text-muted mb-5">
-          Preencha os dados abaixo para {id ? 'atualizar' : 'registrar'} uma receita.
+          Preencha os dados abaixo para {id ? 'atualizar' : 'registrar'} uma
+          receita.
         </p>
 
         {bankAccounts.length === 0 && (
@@ -186,11 +197,13 @@ function ReceitaForm() {
         <div className="card shadow-sm p-4">
           <div className="card-body">
             <form onSubmit={handleSubmit}>
-              
               {/* CAMPO DE SELEÇÃO DE CONTA BANCÁRIA */}
               {!id && bankAccounts.length > 0 && (
                 <div className="mb-4">
-                  <label htmlFor="bankAccount" className="form-label fw-bold text-light">
+                  <label
+                    htmlFor="bankAccount"
+                    className="form-label fw-bold text-light"
+                  >
                     Conta de Entrada
                   </label>
                   <select
@@ -227,7 +240,10 @@ function ReceitaForm() {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="value" className="form-label fw-bold text-light">
+                <label
+                  htmlFor="value"
+                  className="form-label fw-bold text-light"
+                >
                   Valor (R$)
                 </label>
                 <input
@@ -245,7 +261,10 @@ function ReceitaForm() {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="category" className="form-label fw-bold text-light">
+                <label
+                  htmlFor="category"
+                  className="form-label fw-bold text-light"
+                >
                   Categoria
                 </label>
                 <select
@@ -262,13 +281,18 @@ function ReceitaForm() {
                   }}
                 >
                   <option value="">Selecione uma categoria</option>
-                  {categories.map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
                   ))}
                 </select>
                 {showCustomCategory && (
                   <div className="mt-2">
-                    <label htmlFor="customCategory" className="form-label text-light small">
+                    <label
+                      htmlFor="customCategory"
+                      className="form-label text-light small"
+                    >
                       Nome da categoria customizada
                     </label>
                     <input
@@ -285,7 +309,10 @@ function ReceitaForm() {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="description" className="form-label fw-bold text-light">
+                <label
+                  htmlFor="description"
+                  className="form-label fw-bold text-light"
+                >
                   Descrição (opcional)
                 </label>
                 <input
@@ -313,7 +340,10 @@ function ReceitaForm() {
               </div>
 
               <div className="d-grid gap-2 d-md-flex justify-content-md-end pt-3 border-top">
-                <Link to="/despesas" className="btn btn-outline-secondary me-md-2">
+                <Link
+                  to="/despesas"
+                  className="btn btn-outline-secondary me-md-2"
+                >
                   <i className="bi bi-arrow-left me-1"></i> Voltar
                 </Link>
 
@@ -323,7 +353,11 @@ function ReceitaForm() {
                   disabled={loading || bankAccounts.length === 0}
                 >
                   <i className="bi bi-save-fill me-2"></i>
-                  {loading ? 'Salvando...' : id ? 'Atualizar Receita' : 'Registrar Receita'}
+                  {loading
+                    ? 'Salvando...'
+                    : id
+                    ? 'Atualizar Receita'
+                    : 'Registrar Receita'}
                 </button>
               </div>
             </form>

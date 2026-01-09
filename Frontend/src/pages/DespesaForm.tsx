@@ -5,7 +5,10 @@ import { useNavigate, Link, useParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { expenseService } from '../services/expenseService';
 import { bankAccountService } from '../services/bankAccountService';
-import { formatCurrencyInput, parseCurrencyToCents } from '../utils/currencyFormatter';
+import {
+  formatCurrencyInput,
+  parseCurrencyToCents,
+} from '../utils/currencyFormatter';
 import type { BankAccount } from '../types/bankAccount';
 
 function DespesaForm() {
@@ -35,17 +38,19 @@ function DespesaForm() {
     'Tecnologia',
     'Serviços',
     'Outros',
-    'Customizada'
+    'Customizada',
   ];
 
   // Função ajustada para forçar array vazio em caso de falha
   const loadBankAccounts = useCallback(async () => {
     if (!currentOrganization) return;
     try {
-      const accounts = await bankAccountService.getByOrganization(currentOrganization.id);
+      const accounts = await bankAccountService.getByOrganization(
+        currentOrganization.id
+      );
       setBankAccounts(accounts);
       // Define a primeira conta como selecionada por padrão, se houver
-      if (accounts.length > 0 && !id) { 
+      if (accounts.length > 0 && !id) {
         setSelectedBankAccountId(accounts[0].id);
       }
     } catch (error) {
@@ -53,7 +58,6 @@ function DespesaForm() {
       setBankAccounts([]); // Força array vazio em caso de falha para exibir o alerta
     }
   }, [currentOrganization, id]);
-
 
   useEffect(() => {
     if (id) {
@@ -97,23 +101,24 @@ function DespesaForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!currentOrganization) {
       alert('Nenhuma organização selecionada');
       return;
     }
 
     if (bankAccounts.length === 0) {
-      alert('Você precisa cadastrar uma conta bancária antes de lançar despesas. Vá para a página de Contas Bancárias.');
+      alert(
+        'Você precisa cadastrar uma conta bancária antes de lançar despesas. Vá para a página de Contas Bancárias.'
+      );
       return;
     }
-    
+
     // Validação da Conta
     if (!selectedBankAccountId && !id) {
-        alert('Selecione a conta bancária de onde sairá o dinheiro.');
-        return;
+      alert('Selecione a conta bancária de onde sairá o dinheiro.');
+      return;
     }
-
 
     setLoading(true);
 
@@ -124,7 +129,10 @@ function DespesaForm() {
       // Processar categoria: se for "Customizada", usar customCategory; se vazio/undefined, não enviar
       let finalCategory: string | undefined = undefined;
       if (category === 'Customizada') {
-        finalCategory = customCategory && customCategory.trim() !== '' ? customCategory.trim() : undefined;
+        finalCategory =
+          customCategory && customCategory.trim() !== ''
+            ? customCategory.trim()
+            : undefined;
       } else if (category && category.trim() !== '') {
         finalCategory = category.trim();
       }
@@ -147,8 +155,8 @@ function DespesaForm() {
           description: description || undefined,
           category: finalCategory,
           // Adicionando a conta bancária para criação
-          bankAccountId: selectedBankAccountId, 
-        });
+          bankAccountId: selectedBankAccountId,
+        } as any);
       }
       navigate('/despesas');
     } catch (error: any) {
@@ -163,7 +171,9 @@ function DespesaForm() {
     return (
       <div className="main-content">
         <div className="container-fluid">
-          <div className="alert alert-warning">Nenhuma organização selecionada</div>
+          <div className="alert alert-warning">
+            Nenhuma organização selecionada
+          </div>
         </div>
       </div>
     );
@@ -176,7 +186,8 @@ function DespesaForm() {
           {id ? 'Editar Despesa' : 'Registrar nova Despesa'}
         </h1>
         <p className="text-muted mb-5">
-          Preencha os dados abaixo para {id ? 'atualizar' : 'registrar'} uma despesa.
+          Preencha os dados abaixo para {id ? 'atualizar' : 'registrar'} uma
+          despesa.
         </p>
 
         {bankAccounts.length === 0 && (
@@ -189,11 +200,13 @@ function DespesaForm() {
         <div className="card shadow-sm p-4 form-gasto">
           <div className="card-body">
             <form onSubmit={handleSubmit}>
-              
               {/* CAMPO DE SELEÇÃO DE CONTA BANCÁRIA */}
               {!id && bankAccounts.length > 0 && (
                 <div className="mb-4">
-                  <label htmlFor="bankAccount" className="form-label fw-bold text-light">
+                  <label
+                    htmlFor="bankAccount"
+                    className="form-label fw-bold text-light"
+                  >
                     Conta de Saída
                   </label>
                   <select
@@ -214,7 +227,6 @@ function DespesaForm() {
               )}
               {/* FIM CAMPO DE SELEÇÃO DE CONTA BANCÁRIA */}
 
-
               <div className="mb-4">
                 <label htmlFor="name" className="form-label fw-bold text-light">
                   Nome da Despesa
@@ -232,7 +244,10 @@ function DespesaForm() {
 
               {/* ... (restante dos campos de valor, descrição e data) ... */}
               <div className="mb-4">
-                <label htmlFor="valorGasto" className="form-label fw-bold text-light">
+                <label
+                  htmlFor="valorGasto"
+                  className="form-label fw-bold text-light"
+                >
                   Valor (R$)
                 </label>
                 <input
@@ -250,7 +265,10 @@ function DespesaForm() {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="descricaoGasto" className="form-label fw-bold text-light">
+                <label
+                  htmlFor="descricaoGasto"
+                  className="form-label fw-bold text-light"
+                >
                   Descrição (opcional)
                 </label>
                 <input
@@ -264,7 +282,10 @@ function DespesaForm() {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="category" className="form-label fw-bold text-light">
+                <label
+                  htmlFor="category"
+                  className="form-label fw-bold text-light"
+                >
                   Categoria (opcional)
                 </label>
                 <select
@@ -289,7 +310,10 @@ function DespesaForm() {
                 </select>
                 {showCustomCategory && (
                   <div className="mt-2">
-                    <label htmlFor="customCategory" className="form-label text-light small">
+                    <label
+                      htmlFor="customCategory"
+                      className="form-label text-light small"
+                    >
                       Nome da categoria customizada
                     </label>
                     <input
@@ -306,7 +330,10 @@ function DespesaForm() {
               </div>
 
               <div className="mb-5">
-                <label htmlFor="dataGasto" className="form-label fw-bold text-light">
+                <label
+                  htmlFor="dataGasto"
+                  className="form-label fw-bold text-light"
+                >
                   Data
                 </label>
                 <input
@@ -320,9 +347,11 @@ function DespesaForm() {
               </div>
               {/* ... (fim dos campos) ... */}
 
-
               <div className="d-grid gap-2 d-md-flex justify-content-md-end pt-3 border-top">
-                <Link to="/despesas" className="btn btn-outline-secondary me-md-2">
+                <Link
+                  to="/despesas"
+                  className="btn btn-outline-secondary me-md-2"
+                >
                   <i className="bi bi-arrow-left me-1"></i> Voltar
                 </Link>
 
@@ -332,7 +361,11 @@ function DespesaForm() {
                   disabled={loading || bankAccounts.length === 0}
                 >
                   <i className="bi bi-save-fill me-2"></i>
-                  {loading ? 'Salvando...' : id ? 'Atualizar Despesa' : 'Registrar Despesa'}
+                  {loading
+                    ? 'Salvando...'
+                    : id
+                    ? 'Atualizar Despesa'
+                    : 'Registrar Despesa'}
                 </button>
               </div>
             </form>

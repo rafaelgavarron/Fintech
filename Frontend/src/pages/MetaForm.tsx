@@ -2,17 +2,15 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link, useParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { goalService } from '../services/goalService';
-import type { Goal } from '../types/goal';
 
 function MetaForm() {
   const { currentOrganization } = useAuth();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [desiredAmount, setDesiredAmount] = useState('');
-  const [desiredAmountRaw, setDesiredAmountRaw] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,13 +20,13 @@ function MetaForm() {
   const formatCurrencyInput = (value: string): string => {
     // Remove tudo que não é dígito
     const numbers = value.replace(/\D/g, '');
-    
+
     if (!numbers) return '';
-    
+
     // Converte para número e divide por 100 para ter centavos
     const cents = parseInt(numbers, 10);
     const reais = cents / 100;
-    
+
     // Formata com pontos e vírgula
     return reais.toLocaleString('pt-BR', {
       minimumFractionDigits: 2,
@@ -63,8 +61,7 @@ function MetaForm() {
         maximumFractionDigits: 2,
       });
       setDesiredAmount(formatted);
-      setDesiredAmountRaw(valueInReais.toString());
-      
+
       // Converter timestamp Unix para formato de data (YYYY-MM-DD)
       const date = new Date(goal.dueDate * 1000);
       const year = date.getFullYear();
@@ -88,8 +85,10 @@ function MetaForm() {
 
     try {
       // Converter valor formatado para centavos
-      const desiredAmountCents = Math.round(parseCurrencyValue(desiredAmount) * 100);
-      
+      const desiredAmountCents = Math.round(
+        parseCurrencyValue(desiredAmount) * 100
+      );
+
       // Converter data para timestamp Unix (segundos)
       const dueDateTimestamp = Math.floor(new Date(dueDate).getTime() / 1000);
 
@@ -125,7 +124,9 @@ function MetaForm() {
     return (
       <div className="main-content">
         <div className="container-fluid">
-          <div className="alert alert-warning">Nenhuma organização selecionada</div>
+          <div className="alert alert-warning">
+            Nenhuma organização selecionada
+          </div>
         </div>
       </div>
     );
@@ -138,14 +139,14 @@ function MetaForm() {
           {isEditing ? 'Editar Meta' : 'Nova Meta'}
         </h1>
         <p className="text-muted mb-4">
-          {isEditing ? 'Atualize os dados da sua meta financeira.' : 'Crie uma nova meta financeira para sua organização.'}
+          {isEditing
+            ? 'Atualize os dados da sua meta financeira.'
+            : 'Crie uma nova meta financeira para sua organização.'}
         </p>
 
         <div className="card shadow-sm p-4">
           <div className="card-body">
-            {error && (
-              <div className="alert alert-danger mb-4">{error}</div>
-            )}
+            {error && <div className="alert alert-danger mb-4">{error}</div>}
 
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
@@ -180,7 +181,10 @@ function MetaForm() {
               </div>
 
               <div className="mb-3">
-                <label htmlFor="desiredAmount" className="form-label text-light">
+                <label
+                  htmlFor="desiredAmount"
+                  className="form-label text-light"
+                >
                   Valor Desejado (R$) <span className="text-danger">*</span>
                 </label>
                 <input
@@ -220,7 +224,11 @@ function MetaForm() {
                   className="btn btn-primary"
                   disabled={loading}
                 >
-                  {loading ? 'Salvando...' : isEditing ? 'Atualizar Meta' : 'Criar Meta'}
+                  {loading
+                    ? 'Salvando...'
+                    : isEditing
+                    ? 'Atualizar Meta'
+                    : 'Criar Meta'}
                 </button>
                 <Link to="/metas" className="btn btn-secondary">
                   Cancelar
