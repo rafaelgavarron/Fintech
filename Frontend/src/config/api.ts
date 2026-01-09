@@ -8,11 +8,3 @@ export const getAuthHeaders = () => {
     'X-Admin-Token': token,
   };
 };
-
-export const getHeaders = () => {
-  return {
-    'Content-Type': 'application/json',
-    ...getAuthHeaders(),
-  };
-};
-
