@@ -1,0 +1,101 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+.h2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  color: var(--color-success);
+  font-size: 2.5rem;
+}
+
+.headerp {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #374151;
+}
+
+.card {
+  background-color: var(--color-secondary-dark);
+  border-radius: 12px;
+  border: 1px solid #374151;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.card h6 {
+  font-family: 'Inter', 'sans-serif';
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.SummaryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.value {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+}
+
+.textSuccess {
+  color: var(--color-success);
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.cardTitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: var(--color-text-light);
+  margin-bottom: 1.5rem;
+  padding: 0;
+  border-bottom: none;
+}
+
+.tableh th {
+  color: var(--color-text-muted);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  border-top: 1px solid #374151;
+  border-bottom: 2px solid #374151;
+  padding: 0.75rem 0.5rem;
+  background-color: var(--color-secondary-dark);
+}
+.tableh td {
+  background-color: var(--color-secondary-dark);
+  border-bottom: 1px solid #374151;
+  color: var(--color-text-light);
+  font-weight: 500;
+  padding: 1rem 0.5rem;
+}
+
+/* Garantindo que as classes globais funcionem aqui */
+.text-danger {
+  color: var(--color-danger) !important;
+}
+.text-success {
+  color: var(--color-success) !important;
+}
+.fw-bold {
+  font-weight: 700 !important;
+}

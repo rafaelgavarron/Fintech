@@ -1,0 +1,2257 @@
+{
+	"info": {
+		"_postman_id": "finpath-api-collection",
+		"name": "Finpath API - Complete Collection",
+		"description": "Collection completa para testar todos os endpoints da API Finpath",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "organizationId",
+			"value": "org-test-001",
+			"type": "string"
+		},
+		{
+			"key": "memberId",
+			"value": "member-test-001",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "user-test-001",
+			"type": "string"
+		},
+		{
+			"key": "adminToken",
+			"value": "admin-secure-token-2024-finpath",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Expenses",
+			"item": [
+				{
+					"name": "Get All Expenses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"expenses"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Expense By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/expense-test-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"expenses",
+								"expense-test-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Expenses By Organization",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/organization/{{organizationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"expenses",
+								"organization",
+								"{{organizationId}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Expenses By Member",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/member/{{memberId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"expenses",
+								"member",
+								"{{memberId}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Total Expenses By Organization",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/organization/{{organizationId}}/total",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"expenses",
+								"organization",
+								"{{organizationId}}",
+								"total"
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Expense",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"organizationId\": \"{{organizationId}}\",\n  \"targetMemberId\": \"{{memberId}}\",\n  \"targetGroupId\": \"group-test-001\",\n  \"bankTransactionId\": \"bank-tx-003\",\n  \"expenseDate\": 1700000000,\n  \"expenseAmount\": 2500,\n  \"name\": \"Compra de Material\",\n  \"description\": \"Material de escritÃ³rio\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"expenses"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Expense",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"expenseAmount\": 3000,\n  \"description\": \"Despesa atualizada\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/expense-test-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"expenses",
+								"expense-test-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Expense",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/expense-test-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"expenses",
+								"expense-test-001"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Incomes",
+			"item": [
+				{
+					"name": "Get All Incomes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/incomes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"incomes"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Income By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/incomes/income-test-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"incomes",
+								"income-test-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Incomes By Organization",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/incomes/organization/{{organizationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"incomes",
+								"organization",
+								"{{organizationId}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Total Incomes By Organization",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/incomes/organization/{{organizationId}}/total",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"incomes",
+								"organization",
+								"{{organizationId}}",
+								"total"
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Income",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"organizationId\": \"{{organizationId}}\",\n  \"targetMemberId\": \"{{memberId}}\",\n  \"targetGroupId\": \"group-test-001\",\n  \"bankTransactionId\": \"bank-tx-004\",\n  \"incomeDate\": 1700000000,\n  \"incomeAmount\": 50000,\n  \"name\": \"SalÃ¡rio\",\n  \"description\": \"SalÃ¡rio mensal\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/incomes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"incomes"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Income",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"incomeAmount\": 60000,\n  \"description\": \"Receita atualizada\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/incomes/income-test-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"incomes",
+								"income-test-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Income",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/incomes/income-test-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"incomes",
+								"income-test-001"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Members",
+			"item": [
+				{
+					"name": "Get All Members",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/members",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"members"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Member By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/members/{{memberId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"members",
+								"{{memberId}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Members By Organization",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/members/organization/{{organizationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"members",
+								"organization",
+								"{{organizationId}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Check Membership",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/members/check-membership?userId={{userId}}&organizationId={{organizationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"members",
+								"check-membership"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								},
+								{
+									"key": "organizationId",
+									"value": "{{organizationId}}"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Member",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"organizationId\": \"{{organizationId}}\",\n  \"userId\": \"{{userId}}\",\n  \"roleId\": \"role-001\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/members",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"members"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Member Role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"roleId\": \"role-002\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/members/{{memberId}}/role",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"members",
+								"{{memberId}}",
+								"role"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Member",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/members/{{memberId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"members",
+								"{{memberId}}"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Organizations",
+			"item": [
+				{
+					"name": "Get All Organizations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/organizations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"organizations"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Active Organizations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/organizations/active",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"organizations",
+								"active"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Organization By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/organizations/{{organizationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Organization",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Nova OrganizaÃ§Ã£o\",\n  \"isActive\": true,\n  \"trialExpireAt\": 1735689600\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/organizations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"organizations"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Organization",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"OrganizaÃ§Ã£o Atualizada\",\n  \"isActive\": true,\n  \"trialExpireAt\": 1735689600\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/organizations/{{organizationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Organization",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/organizations/{{organizationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"organizations",
+								"{{organizationId}}"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Goals",
+			"item": [
+				{
+					"name": "Get All Goals",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/goals",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"goals"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Goal By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/goals/goal-test-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"goals",
+								"goal-test-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Goals By Organization",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/goals/organization/{{organizationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"goals",
+								"organization",
+								"{{organizationId}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Total Desired Amount By Organization",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/goals/organization/{{organizationId}}/total",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"goals",
+								"organization",
+								"{{organizationId}}",
+								"total"
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Goal",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"organizationId\": \"{{organizationId}}\",\n  \"dueDate\": 1735689600,\n  \"name\": \"Casa PrÃ³pria\",\n  \"description\": \"Economizar para entrada da casa\",\n  \"desiredAmount\": 5000000\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/goals",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"goals"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Goal",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dueDate\": 1735689600,\n  \"name\": \"Meta Atualizada\",\n  \"description\": \"Nova descriÃ§Ã£o\",\n  \"desiredAmount\": 6000000\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/goals/goal-test-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"goals",
+								"goal-test-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Goal",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/goals/goal-test-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"goals",
+								"goal-test-001"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Goals Contributions",
+			"item": [
+				{
+					"name": "Get All Contributions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/goals-contributions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"goals-contributions"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Contributions By Goal",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/goals-contributions/goal/goal-test-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"goals-contributions",
+								"goal",
+								"goal-test-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Total Contributions By Goal",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/goals-contributions/goal/goal-test-001/total",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"goals-contributions",
+								"goal",
+								"goal-test-001",
+								"total"
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Contribution",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"goalId\": \"goal-test-001\",\n  \"contributionDate\": 1700000000,\n  \"value\": 100000,\n  \"description\": \"ContribuiÃ§Ã£o mensal\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/goals-contributions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"goals-contributions"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Contribution",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"contributionDate\": 1700000000,\n  \"value\": 150000,\n  \"description\": \"ContribuiÃ§Ã£o atualizada\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/goals-contributions/contribution-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"goals-contributions",
+								"contribution-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Contribution",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/goals-contributions/contribution-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"goals-contributions",
+								"contribution-001"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Achievements",
+			"item": [
+				{
+					"name": "Get All Achievements",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/achievements",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"achievements"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Achievement By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/achievements/achievement-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"achievements",
+								"achievement-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Search Achievements By Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/achievements/search?name=Primeira",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"achievements",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Primeira"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Achievement",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Economizador Expert\",\n  \"description\": \"Economizou mais de R$ 10.000\",\n  \"iconUrl\": \"icon_expert.png\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/achievements",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"achievements"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Achievement",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Economizador Master\",\n  \"description\": \"Nova descriÃ§Ã£o\",\n  \"iconUrl\": \"icon_master.png\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/achievements/achievement-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"achievements",
+								"achievement-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Achievement",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/achievements/achievement-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"achievements",
+								"achievement-001"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Challenges",
+			"item": [
+				{
+					"name": "Get All Challenges",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/challenges",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"challenges"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Challenge By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/challenges/challenge-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"challenges",
+								"challenge-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Challenges By Level",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/challenges/level/EASY",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"challenges",
+								"level",
+								"EASY"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Challenges By Type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/challenges/type/SAVINGS",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"challenges",
+								"type",
+								"SAVINGS"
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Challenge",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"achievementId\": \"achievement-001\",\n  \"level\": \"MEDIUM\",\n  \"name\": \"Economize R$ 500\",\n  \"description\": \"Economize R$ 500 em um mÃªs\",\n  \"challengeType\": \"SAVINGS\",\n  \"points\": 500\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/challenges",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"challenges"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Challenge",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"achievementId\": \"achievement-001\",\n  \"level\": \"HARD\",\n  \"name\": \"Economize R$ 1000\",\n  \"description\": \"Nova descriÃ§Ã£o\",\n  \"challengeType\": \"SAVINGS\",\n  \"points\": 1000\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/challenges/challenge-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"challenges",
+								"challenge-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Challenge",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/challenges/challenge-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"challenges",
+								"challenge-001"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Member Points",
+			"item": [
+				{
+					"name": "Get Member Points",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/member-points/member/{{memberId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"member-points",
+								"member",
+								"{{memberId}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Leaderboard",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/member-points/leaderboard",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"member-points",
+								"leaderboard"
+							]
+						}
+					}
+				},
+				{
+					"name": "Add Points To Member",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"points\": 100\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/member-points/member/{{memberId}}/add-points",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"member-points",
+								"member",
+								"{{memberId}}",
+								"add-points"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Member Achievements",
+			"item": [
+				{
+					"name": "Get Member Achievements",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/member-achievements/member/{{memberId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"member-achievements",
+								"member",
+								"{{memberId}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Total Achievements By Member",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/member-achievements/member/{{memberId}}/count",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"member-achievements",
+								"member",
+								"{{memberId}}",
+								"count"
+							]
+						}
+					}
+				},
+				{
+					"name": "Award Achievement",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"memberId\": \"{{memberId}}\",\n  \"achievementId\": \"achievement-001\",\n  \"date\": 1700000000\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/member-achievements/award",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"member-achievements",
+								"award"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get User By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{userId}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get User By Email",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/email/teste@fiap.com.br",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"email",
+								"teste@fiap.com.br"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Admin Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/admin-token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"admin-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"JoÃ£o Silva\",\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senha123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					}
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"teste@fiap.com.br\",\n  \"password\": \"hashed_password\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"JoÃ£o Silva Atualizado\",\n  \"password\": \"novasenha123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{userId}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{userId}}"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "Get All Roles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/roles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"roles"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Role By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/roles/role-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"roles",
+								"role-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Role By Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/roles/name/ADMIN",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"roles",
+								"name",
+								"ADMIN"
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"VIEWER\",\n  \"description\": \"Apenas visualizaÃ§Ã£o\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/roles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"roles"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"ADMIN_UPDATED\",\n  \"description\": \"DescriÃ§Ã£o atualizada\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/roles/role-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"roles",
+								"role-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Role",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/roles/role-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"roles",
+								"role-001"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Bank Accounts",
+			"item": [
+				{
+					"name": "Get All Bank Accounts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/bank-accounts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bank-accounts"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Bank Account By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/bank-accounts/bank-account-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bank-accounts",
+								"bank-account-001"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Bank Accounts By Organization",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/bank-accounts/organization/{{organizationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bank-accounts",
+								"organization",
+								"{{organizationId}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Connect Bank Account",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"organizationId\": \"{{organizationId}}\",\n  \"memberId\": \"{{memberId}}\",\n  \"bankName\": \"ItaÃº\",\n  \"accessToken\": \"access-token-123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bank-accounts/connect",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bank-accounts",
+								"connect"
+							]
+						}
+					}
+				},
+				{
+					"name": "Disconnect Bank Account",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/bank-accounts/bank-account-001/disconnect",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bank-accounts",
+								"bank-account-001",
+								"disconnect"
+							]
+						}
+					}
+				},
+				{
+					"name": "Sync Account Transactions",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/bank-accounts/bank-account-001/sync",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bank-accounts",
+								"bank-account-001",
+								"sync"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Bank Account",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Admin-Token",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/bank-accounts/bank-account-001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bank-accounts",
+								"bank-account-001"
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}
